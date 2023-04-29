@@ -369,7 +369,7 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
   protected void startTimerForRegisteringLongClick(TextView textView, LongPressTimer.OnTimerReachedListener longClickListener) {
     ongoingLongPressTimer = new LongPressTimer();
     ongoingLongPressTimer.setOnTimerReachedListener(longClickListener);
-    textView.postDelayed(ongoingLongPressTimer, ViewConfiguration.getLongPressTimeout());
+    textView.postDelayed(ongoingLongPressTimer, ViewConfiguration.getLongPressTimeout() - 20);
   }
 
   /**
