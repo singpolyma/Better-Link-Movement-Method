@@ -17,7 +17,7 @@ public class PhoneLinkPopupMenu extends PopupMenu {
 
     getMenuInflater().inflate(R.menu.phone_link_menu, getMenu());
     setOnMenuItemClickListener(item -> {
-      switch (item.getItemId()) {
+      /*switch (item.getItemId()) {
         case R.id.action_call:
           callNumber(context, phoneUrl);
           return true;
@@ -36,7 +36,8 @@ public class PhoneLinkPopupMenu extends PopupMenu {
 
         default:
           throw new UnsupportedOperationException();
-      }
+      }*/
+      return true;
     });
   }
 

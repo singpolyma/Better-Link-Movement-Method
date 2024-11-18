@@ -5,6 +5,7 @@ repositories {
 }
 
 android {
+  namespace = "me.saket.bettermovementmethod.sample"
   compileSdkVersion versions.compileSdk
 
   defaultConfig {

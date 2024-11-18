@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
 
 android {
+  namespace = "me.saket.bettermovementmethod"
   compileSdkVersion versions.compileSdk
   resourcePrefix "bettermovementmethod_"
 
@@ -17,34 +19,25 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+
+  publishing {
+    singleVariant("release") {
+      withSourcesJar()
+      withJavadocJar()
+    }
+  }
 }
 
-ext {
-  bintrayRepo = 'maven'
-  bintrayName = 'better-link-movement-method'
-
-  publishedGroupId = 'me.saket'
-  artifact = 'better-link-movement-method'
-  libraryName = 'BetterLinkMovementMethod'
-  libraryVersion = versions.libraryVersionName
-
-  libraryDescription = 'A less buggy and customizable LinkMovementMethod for Android'
-
-  siteUrl = 'https://github.com/Saketme/BetterLinkMovementMethod'
-  gitUrl = 'https://github.com/Saketme/BetterLinkMovementMethod.git'
-
-  developerId = 'saketme'
-  developerName = 'Saket Narayan'
-  developerEmail = 'saket@saket.me'
-
-  licenseName = 'Apache License v2'
-  licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0'
-  allLicenses = ["Apache-2.0"]
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                from components.release
+                groupId = 'me.saket.bettermovementmethod'
+                artifactId = 'better-link-movement-method'
+                version = versions.libraryVersionName
+            }
+        }
+    }
 }
-
-dependencies {
-}
-
-// Task for uploading JAR to maven: "./gradlew better-link-movement-method:bintrayUpload".
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
