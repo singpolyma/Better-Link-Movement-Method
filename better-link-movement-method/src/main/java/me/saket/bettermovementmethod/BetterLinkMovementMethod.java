@@ -233,7 +233,7 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
             public void onTimerReached() {
               wasLongPressRegistered = true;
               textView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-              removeUrlHighlightColor(textView);
+              removeUrlHighlightColor(textView, text);
               dispatchUrlLongClick(textView, clickableSpanUnderTouch);
             }
           };
@@ -268,7 +268,7 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
           if (clickableSpanUnderTouch != null) {
             highlightUrl(textView, clickableSpanUnderTouch, text);
           } else {
-            removeUrlHighlightColor(textView);
+            removeUrlHighlightColor(textView, text);
           }
         }
 
@@ -282,7 +282,7 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
   private void cleanupOnTouchUp(TextView textView) {
     wasLongPressRegistered = false;
     clickableSpanUnderTouchOnActionDown = null;
-    removeUrlHighlightColor(textView);
+    removeUrlHighlightColor(textView, textView.getText() instanceof Spannable ? ((Spannable) textView.getText()) : null);
     removeLongPressCallback(textView);
   }
 
@@ -353,13 +353,14 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
   /**
    * Removes the highlight color under the Url.
    */
-  protected void removeUrlHighlightColor(TextView textView) {
+  protected void removeUrlHighlightColor(TextView textView, Spannable text) {
     if (!isUrlHighlighted) {
       return;
     }
     isUrlHighlighted = false;
 
-    Spannable text = (Spannable) textView.getText();
+    if (text == null) return;
+
     BackgroundColorSpan highlightSpan = (BackgroundColorSpan) textView.getTag(R.id.bettermovementmethod_highlight_background_span);
     text.removeSpan(highlightSpan);
 
